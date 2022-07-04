@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>{{ "this is my single view page" }}</p>
+    <p>{{ singleCountry.name.common }}</p>
   </div>
 </template>
 
@@ -9,12 +10,11 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "singleView",
   data: () => ({
-    countryName: "",
+    // countryName: "",
   }),
   async mounted() {
-    // await this.getSingleCountry();
-    // this.countryName = this.$route.params.name;
-    // await this.fetchSingleCountry(this.countryName);
+    const countryName = this.$route.params.name;
+    await this.getSingleCountry(countryName);
   },
   computed: {
     ...mapGetters({
@@ -25,10 +25,6 @@ export default {
     ...mapActions({
       getSingleCountry: "getSingleCountry",
     }),
-    // async fetchSingleCountry(countryName) {
-    //   console.log(this.countryName);
-    //   await this.getSingleCountry({ countryName });
-    // },
   },
 };
 </script>

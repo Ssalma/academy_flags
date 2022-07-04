@@ -9,7 +9,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/country',
+    path: '/country/:name',
     name: 'SingleCountry',
     component: SingleView,
   },

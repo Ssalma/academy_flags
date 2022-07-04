@@ -15,7 +15,7 @@ const store = createStore({
       state.countries = payload;
     },
     SET_SINGLE_COUNTRY(state, payload) {
-      state.countries = payload;
+      state.singleCountry = payload;
     },
   },
   actions: {
@@ -28,12 +28,12 @@ const store = createStore({
         console.log(error);
       }
     },
-    async getSingleCountry({ countryName }) {
+    async getSingleCountry({ commit }, countryName) {
       try {
         const response = await axios.get(
           `https://restcountries.com/v3.1/name/${countryName} `
         );
-        console.log(response);
+        commit("SET_SINGLE_COUNTRY", response.data[0]);
         return response;
       } catch (error) {
         console.log(error);
