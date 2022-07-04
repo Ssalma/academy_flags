@@ -1,5 +1,24 @@
 <template>
-  <Card :countries="countries"> </Card>
+  <div class="home">
+    <input
+      type="text"
+      placeholder="Search for a country..."
+      v-model="searchTerm"
+    />
+    <!-- <div class="select-container">
+      <select name="" id="" v-model="selectTerm">
+        <option value="">Filter by Region</option>
+        <option value="Africa">Africa</option>
+        <option value="America">America</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+    </div> -->
+    <div class="home_content">
+      <Card :countries="filteredCountries"> </Card>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -12,28 +31,37 @@ export default {
   },
   data: () => ({
     username: "",
+    searchTerm: "",
   }),
   mounted() {
-    this.getCountries();
+    this.getAllCountries();
   },
   computed: {
-    // getters from store is accessed in methods using mapGetters.
     ...mapGetters({
       countries: "getCountries",
     }),
+    filteredCountries() {
+      if (this.searchTerm) {
+        return this.countries.filter((country) =>
+          country.name.common.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+      } else {
+        return this.countries;
+      }
+    },
   },
   methods: {
-    // action from store is accessed in methods using mapActions.
-    // mutations from store is accessed in methods using mapMutations.
     ...mapActions({
       getAllCountries: "getAllCountries",
     }),
-    async getCountries() {
-      await this.getAllCountries();
-    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.home {
+  &_content {
+    border: 1px solid red;
+  }
+}
 </style>
