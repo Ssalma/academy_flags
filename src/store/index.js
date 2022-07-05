@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import axios from "axios";
+import { getAllCountries, getSingleCountry } from "../api/api";
 
 const store = createStore({
   state: {
@@ -21,20 +21,18 @@ const store = createStore({
   actions: {
     async getAllCountries({ commit }) {
       try {
-        const response = await axios.get("https://restcountries.com/v3.1/all");
+        const response = await getAllCountries();
         commit("SET_COUNTRIES", response.data);
         return response;
       } catch (error) {
         console.log(error);
       }
     },
-    async getSingleCountry({ commit }, countryName) {
+    async getOneSingleCountry({ commit }, countryName) {
       try {
-        const response = await axios.get(
-          `https://restcountries.com/v3.1/name/${countryName} `
-        );
+        const response = await getSingleCountry(countryName);
         commit("SET_SINGLE_COUNTRY", response.data[0]);
-        return response;
+        return response.data;
       } catch (error) {
         console.log(error);
       }

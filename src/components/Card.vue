@@ -5,7 +5,7 @@
     :key="country.name.common"
     @click="
       this.$router.push({
-        name: 'SingleCountry',
+        name: 'SingleCountryPage',
         params: { name: country.name.common },
       })
     "

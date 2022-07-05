@@ -10,7 +10,7 @@ const routes = [
   },
   {
     path: '/country/:name',
-    name: 'SingleCountry',
+    name: 'SingleCountryPage',
     component: SingleView,
   },
   {

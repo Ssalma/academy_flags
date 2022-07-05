@@ -1,20 +1,27 @@
 <template>
-  <div>
+  <div class="wrapper">
     <p>{{ "this is my single view page" }}</p>
-    <p>{{ singleCountry.name.common }}</p>
+    <button @click="$router.go(-1)">back</button>
+    <div class="content">
+      <div>
+        <img :src="singleCountry.flags?.png" alt="" />
+      </div>
+      <div>
+        <p>Name : {{ singleCountry.name?.common }}</p>
+        <p>Region : {{ singleCountry.region }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  name: "singleView",
-  data: () => ({
-    // countryName: "",
-  }),
-  async mounted() {
+  name: "SinglePage",
+  data: () => ({}),
+  created() {
     const countryName = this.$route.params.name;
-    await this.getSingleCountry(countryName);
+    this.getOneSingleCountry(countryName);
   },
   computed: {
     ...mapGetters({
@@ -23,11 +30,18 @@ export default {
   },
   methods: {
     ...mapActions({
-      getSingleCountry: "getSingleCountry",
+      getOneSingleCountry: "getOneSingleCountry",
     }),
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+button {
+  cursor: pointer;
+}
 </style>

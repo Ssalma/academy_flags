@@ -5,6 +5,14 @@
       placeholder="Search for a country..."
       v-model="searchTerm"
     />
+    <div class="select-container">
+      <select name="" id="" v-model="selectTerm">
+        <option value="">Filter by Region</option>
+        <option v-for="opt in regions" :key="opt" :value="opt">
+          {{ opt }}
+        </option>
+      </select>
+    </div>
     <div class="home_content">
       <Card :countries="filteredCountries"> </Card>
     </div>
@@ -22,9 +30,12 @@ export default {
   data: () => ({
     username: "",
     searchTerm: "",
+    selectTerm: "",
+    regions: [],
   }),
-  mounted() {
-    this.getAllCountries();
+  async mounted() {
+    await this.getAllCountries();
+    await this.filterRegions();
   },
   computed: {
     ...mapGetters({
@@ -33,7 +44,13 @@ export default {
     filteredCountries() {
       if (this.searchTerm) {
         return this.countries.filter((country) =>
-          country.name.common.toLowerCase().includes(this.searchTerm.toLowerCase())
+          country.name.common
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())
+        );
+      } else if (this.selectTerm) {
+        return this.countries.filter((country) =>
+          country.region.includes(this.selectTerm)
         );
       } else {
         return this.countries;
@@ -44,6 +61,11 @@ export default {
     ...mapActions({
       getAllCountries: "getAllCountries",
     }),
+    filterRegions() {
+      const val = this.countries.map((c) => c.region);
+      const regionsArray = [...new Set(val)];
+      this.regions = regionsArray;
+    },
   },
 };
 </script>
